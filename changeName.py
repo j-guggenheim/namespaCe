@@ -24,7 +24,8 @@ def replace_var_names(c_code, namespaces):
             # Replace variable names with "TEST" using regex for whole word matching
             for var in current_namespace_vars:
                 pattern = r'\b' + re.escape(var) + r'\b'  # Word boundary regex
-                line = re.sub(pattern, "TEST", line)  # Replace with regex
+                replacement = namespace_name + '__' + var
+                line = re.sub(pattern, replacement, line)  # Replace with regex
             lines[i] = line
 
             if '{' in line:  # End of namespace
@@ -58,7 +59,7 @@ if __name__ == "__main__":
 
 
 # To change:
-# 1. curly brace 
+# 1. curly brace  DONE
 # 2. nested namespaces
-# 3. what to set the variable names to
-# 4. concerns with partial matching (ie var1 and var10)
+# 3. what to set the variable names to  DONE
+# 4. concerns with partial matching (ie var1 and var10) DONE

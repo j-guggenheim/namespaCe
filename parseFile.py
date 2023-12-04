@@ -6,8 +6,8 @@ qualifiers = [re.compile("\sstatic\s"), re.compile("\svolatile\s"), re.compile('
 reStructUnion = [re.compile("\sstruct\s"), re.compile("\sunion\s"), re.compile("\senum\s")]
 
 # Unsigned is a problem. Mainly because it can act like a qualifier OR a type
-unsignedProblem = [re.compile('\sunsigned\s(int\s|long\s|char\s|short\s)'), re.compile('\ssigned\s(int\s|long\s|char\s|short\s)'), re.compile('\slong\s(int\s|unsigned\s|long\s)'), re.compile('\sshort\s(int\s|unsigned\s)')]
-unsignedRemove = [re.compile('\sunsigned\s'), re.compile('\ssigned\s'), re.compile('\slong\s'), re.compile("\sshort\s")]
+unsignedProblem = [re.compile('\sunsigned\s(int\s|long\s|char\s|short\s)'), re.compile('\ssigned\s(int\s|long\s|char\s|short\s)'), re.compile('\slong\s(int\s|unsigned\s|long\s)'), re.compile('\sshort\s(int\s|unsigned\s)'), re.compile('\sint\s(unsigned\s)')]
+unsignedRemove = [re.compile('\sunsigned\s'), re.compile('\ssigned\s'), re.compile('\slong\s'), re.compile("\sshort\s"), re.compile("\sint\s")]
 
 reNamespace = re.compile('\snamespace\s\S+\s*\{')
 
@@ -233,7 +233,7 @@ def getGlobalNames(text: str):
                 depthToTake = curlyBraceDepth
 
 if __name__ == "__main__":
-    cFile = open('test.c', 'r')
+    cFile = open('test3.cpp', 'r')
 
     fileText = cFile.read()
     reMoveAnnoyingLines = re.compile("\#.*\n")

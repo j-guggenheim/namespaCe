@@ -124,9 +124,11 @@ if __name__ == "__main__":
         c_code = file.read()
 
     namespaces = {
-        'outerNamespace': ['var1', 'var2', 'testFunction'],
-        'innerNamespace': ['function1', 'var3', 'var2']
-    }
+    'outerNamespace': ['var1', 'var2', 'testFunction', 'var5'],
+    'innerNamespace': ['var1', 'function1', 'var3'],
+    'veryInnerNamespace': ['var6', 'function2', 'var7'],
+    'adjacentNamespace': ['var8', 'function3', 'var9', 'var1']
+}
 
     modified_c_code = replace_var_names(c_code, namespaces)
     print(modified_c_code)
@@ -134,7 +136,9 @@ if __name__ == "__main__":
 # To change:
 # 1. curly brace  DONE
 # 2. nested namespaces
-    # a. properly identify the namespace associated with each var/function
-    # b. change all instances of namespace_name::var_name
+    # a. properly identify the namespace associated with each var/function DONE
+    # b. change all instances of namespace_name::var_name DONE
+    # c. Edge case: if there's an extent variable referenced in a nested namespace, but also a variable of 
+    #   the same name for that namespace NOT DONE
 # 3. what to set the variable names to  DONE
 # 4. concerns with partial matching (ie var1 and var10) DONE

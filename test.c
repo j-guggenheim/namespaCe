@@ -1,21 +1,26 @@
-int var1 = 12;
+#include <stdio.h>
 
+int var4;
 
-namespace myNamespace {
-    int var1 = 4;
+namespace outerNamespace {
+    int var1 = 10;
+    int var2 = 20;
 
-    int var10 = 10;
-
-    void function1(int a, char b)
-    {
-        return;
+    namespace innerNamespace {
+        void function1() {
+            var1 = 30;  // This var1 should belong to outerNamespace
+        }
+        int var2 = 5;
+        int var3 = 40;
     }
 
-
-    long var2;
+    void testFunction() {
+        innerNamespace::function1();
+        int var4 = var2;  // This var2 should belong to outerNamespace
+    }
 }
 
-int main(void)
-{
+int main() {
+    outerNamespace::testFunction();
     return 0;
 }

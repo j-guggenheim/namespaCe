@@ -48,7 +48,7 @@ def replace_var_names(c_code, namespaces):
         # Replace 'namespace::' with 'namespace__'
         line = re.sub(namespace_usage_pattern, r'\1__', line)
             
-        namespace_match = re.match(r'\s*namespace\s+(\w+)\s*\{', line)
+        namespace_match = re.match(r'\s*namespace\s+((\w|$)+)\s*\{', line)
         if namespace_match:
             # Extract namespace name from the regex match
             namespace_name = namespace_match.group(1)

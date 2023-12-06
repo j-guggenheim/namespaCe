@@ -242,5 +242,6 @@ if __name__ == "__main__":
     outFile = open('testpost.c', 'w')
 
     getGlobalNames(fileTextMod)
+    print(namespaces)
     outFile.write(changeName.replace_var_names(fileText, namespaces))
     

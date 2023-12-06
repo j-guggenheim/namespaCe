@@ -8,7 +8,7 @@ int foo()
 
 
 
-namespace te_$st{
+namespace te_st{
 
 extern
   __attribute__((__format__ (gnu_printf, 1, 2))) __attribute__ ((__nonnull__ (1)))
@@ -109,8 +109,7 @@ tStructdef f;
 struct newStruct{int k;} retStructure(int), newStructInstance, newStructInstanceReturn(void);
 
 struct retStruct{ int retStructVal; } foooo(void) {
-    return {2};
-}
+    return {2};}
 
 unsigned int tempVar = 5;
 int barR()

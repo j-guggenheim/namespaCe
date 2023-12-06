@@ -9,119 +9,119 @@ int foo()
 
 
 
-externte_$st__$
+extern
   __attribute__((__format__ (gnu_printf, 1, 2))) __attribute__ ((__nonnull__ (1)))
-  int __attribute__((__cdecl__)) te_$st__attributeFuncNameLol(const char * __restrict__ , ... ) __attribute__ ((__nothrow__));
+  int __attribute__((__cdecl__)) te_st__attributeFuncNameLol(const char * __restrict__ , ... ) __attribute__ ((__nothrow__));
 
-enum te_$st__test{gg, hh, ii} te_$st__enumFunc(void)
+enum te_st__test{gg, hh, ii} te_st__enumFunc(void)
 {
     return gg;
 }
 
 
-long unsigned te_$st__a;
+long unsigned te_st__a;
 
-int unsigned te_$st__b;
+int unsigned te_st__b;
 
-static const volatile int te_$st__x, te_$st__y, te_$st__z;
-char te_$st__c = 'te_$st__a';
+static const volatile int te_st__x, te_st__y, te_st__z;
+char te_st__c = 'te_st__a';
 
-float te_$st__flote;
-double te_$st__dubs;
+float te_st__flote;
+double te_st__dubs;
 
-uint8_t te_$st__intTypes;
+uint8_t te_st__intTypes;
 
-enum te_$st__tEnum{ g }te_$st__tEnumInstance;
-union te_$st__tUnionnn{int k; char l;} te_$st__tUnionnnFunc(int)
+enum te_st__tEnum{ g }te_st__tEnumInstance;
+union te_st__tUnionnn{int k; char l;} te_st__tUnionnnFunc(int)
 {
     return {3};
 }
 
-int (*te_$st__funcPtr)(int, int), (*te_$st__funcPtr2)();
+int (*te_st__funcPtr)(int, int), (*te_st__funcPtr2)();
 
-int (*(*(*(*te_$st__foo5(void))(void))(void))(void))(int i);
+int (*(*(*(*te_st__foo5(void))(void))(void))(void))(int i);
 
-void (* ( *te_$st__get ( int) ) (int) ) (int, int)
+void (* ( *te_st__get ( int) ) (int) ) (int, int)
 {
     return nullptr;
 }
 
-int (te_$st__test) = (3);
+int (te_st__test) = (3);
 
-int * te_$st__a;
-int te_$st__j;
+int * te_st__a;
+int te_st__j;
 
-static int te_$st__z = (int)3, te_$st__b=2;
+static int te_st__z = (int)3, te_st__b=2;
 
-static int te_$st__c = 3 + 5;
+static int te_st__c = 3 + 5;
 
-typedef int te_$st__newNameForInt;
+typedef int te_st__newNameForInt;
 
 int $;
 
-unsigned te_$st__retUnsigned(int te_$st__a, float te_$st__b){
-    return (unsigned) te_$st__a;
+unsigned te_st__retUnsigned(int te_st__a, float te_st__b){
+    return (unsigned) te_st__a;
 }
 
-unsigned long te_$st__retLongUnsigned(int te_$st__a, float te_$st__b)
+unsigned long te_st__retLongUnsigned(int te_st__a, float te_st__b)
 {
-    return te_$st__b;
+    return te_st__b;
 }
 
-int (te_$st__foo)()
+int (te_st__foo)()
 {
     return 2;
 }
 
-int te_$st__bar (){return te_$st__b;} int te_$st__bar2(void){return te_$st__c;}
+int te_st__bar (){return te_st__b;} int te_st__bar2(void){return te_st__c;}
 
-typedef struct te_$st__tStruct {
+typedef struct te_st__tStruct {
     int i;
-    int te_$st__j;
+    int te_st__j;
 
-    struct te_$st__inner {
+    struct te_st__inner {
         int k;
         int l;
     } inst, inst2;
     
     
-    union te_$st__innerUnion{
-        int te_$st__z;
+    union te_st__innerUnion{
+        int te_st__z;
     };
 
-    enum te_$st__innerEnum{
+    enum te_st__innerEnum{
         ggg = 566,
     } innerEnumInstance;
     
-} te_$st__tStructdef[5];
+} te_st__tStructdef[5];
 
-typedef struct tstruct te_$st__tStructDef2;
+typedef struct tstruct te_st__tStructDef2;
 
-struct te_$st__tStruct te_$st__e[];
+struct te_st__tStruct te_st__e[];
 
-typedef int * te_$st__koo(long);
+typedef int * te_st__koo(long);
 
-te_$st__koo te_$st__loo;
+te_st__koo te_st__loo;
 
-te_$st__tStructdef te_$st__f;
+te_st__tStructdef te_st__f;
 
-struct te_$st__newStruct{int k;} te_$st__retStructure(int), te_$st__newStructInstance, te_$st__newStructInstanceReturn(void);
+struct te_st__newStruct{int k;} te_st__retStructure(int), te_st__newStructInstance, te_st__newStructInstanceReturn(void);
 
-struct te_$st__retStruct{ int retStructVal; } te_$st__foooo(void) {
-    return {2};
+struct te_st__retStruct{ int retStructVal; } te_st__foooo(void) {
+    return {2};}
 
-unsigned int tempVar = 5;
-int barR()
+unsigned int te_st__tempVar = 5;
+int te_st__barR()
 {
-    int tempVar;
+    int te_st__tempVar;
 
-    return tempVar;
+    return te_st__tempVar;
 }
 
-union test3
+union te_st__test3
 {
-    struct inner2 {
-        struct inner8{
+    struct te_st__inner2 {
+        struct te_st__inner8{
             int help;
         };
         int k;
@@ -129,17 +129,16 @@ union test3
     };
     int k;
     int d;
-    char f;
+    char te_st__f;
     char lmfad[10];
 };
 
-unsigned int integerVal(void), kVal = 9, (*gVal(void))[3];
+unsigned int te_st__integerVal(void), te_st__kVal = 9, (*te_st__gVal(void))[3];
 
 
 
     int Arg;
 
-}
 
 struct t2Struct{
     struct innards{

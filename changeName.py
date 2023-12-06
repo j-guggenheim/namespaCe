@@ -68,6 +68,7 @@ def replace_var_names(c_code, namespaces):
                     if var not in used:
                         pattern = r'\b' + re.escape(var) + r'\b'  # Word boundary regex
                         used.append(var)    # should it be 'used.append(pattern)' ??
+                        # Go through the stack to find nested names of namespaces
                         replacement = namespace.name + '__' + var
                         line = re.sub(pattern, replacement, line)  # Replace with regex
             lines[i] = line
@@ -93,6 +94,7 @@ def replace_var_names(c_code, namespaces):
                         current_namespace = namespace_stack[-1]
                     else:
                         current_namespace = None
+                    continue
                 else:
                     current_namespace.brace_counter -= 1
 

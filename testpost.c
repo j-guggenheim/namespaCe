@@ -8,109 +8,107 @@ int foo()
 
 
 
-namespace te_$st{
 
-extern
+externte_$st__$
   __attribute__((__format__ (gnu_printf, 1, 2))) __attribute__ ((__nonnull__ (1)))
-  int __attribute__((__cdecl__)) attributeFuncNameLol(const char * __restrict__ , ... ) __attribute__ ((__nothrow__));
+  int __attribute__((__cdecl__)) te_$st__attributeFuncNameLol(const char * __restrict__ , ... ) __attribute__ ((__nothrow__));
 
-enum test{gg, hh, ii} enumFunc(void)
+enum te_$st__test{gg, hh, ii} te_$st__enumFunc(void)
 {
     return gg;
 }
 
 
-long unsigned a;
+long unsigned te_$st__a;
 
-int unsigned b;
+int unsigned te_$st__b;
 
-static const volatile int x, y, z;
-char c = 'a';
+static const volatile int te_$st__x, te_$st__y, te_$st__z;
+char te_$st__c = 'te_$st__a';
 
-float flote;
-double dubs;
+float te_$st__flote;
+double te_$st__dubs;
 
-uint8_t intTypes;
+uint8_t te_$st__intTypes;
 
-enum tEnum{ g }tEnumInstance;
-union tUnionnn{int k; char l;} tUnionnnFunc(int)
+enum te_$st__tEnum{ g }te_$st__tEnumInstance;
+union te_$st__tUnionnn{int k; char l;} te_$st__tUnionnnFunc(int)
 {
     return {3};
 }
 
-int (*funcPtr)(int, int), (*funcPtr2)();
+int (*te_$st__funcPtr)(int, int), (*te_$st__funcPtr2)();
 
-int (*(*(*(*foo5(void))(void))(void))(void))(int i);
+int (*(*(*(*te_$st__foo5(void))(void))(void))(void))(int i);
 
-void (* ( *get ( int) ) (int) ) (int, int)
+void (* ( *te_$st__get ( int) ) (int) ) (int, int)
 {
     return nullptr;
 }
 
-int (test) = (3);
+int (te_$st__test) = (3);
 
-int * a;
-int j;
+int * te_$st__a;
+int te_$st__j;
 
-static int z = (int)3, b=2;
+static int te_$st__z = (int)3, te_$st__b=2;
 
-static int c = 3 + 5;
+static int te_$st__c = 3 + 5;
 
-typedef int newNameForInt;
+typedef int te_$st__newNameForInt;
 
 int $;
 
-unsigned retUnsigned(int a, float b){
-    return (unsigned) a;
+unsigned te_$st__retUnsigned(int te_$st__a, float te_$st__b){
+    return (unsigned) te_$st__a;
 }
 
-unsigned long retLongUnsigned(int a, float b)
+unsigned long te_$st__retLongUnsigned(int te_$st__a, float te_$st__b)
 {
-    return b;
+    return te_$st__b;
 }
 
-int (foo)()
+int (te_$st__foo)()
 {
     return 2;
 }
 
-int bar (){return b;} int bar2(void){return c;}
+int te_$st__bar (){return te_$st__b;} int te_$st__bar2(void){return te_$st__c;}
 
-typedef struct tStruct {
+typedef struct te_$st__tStruct {
     int i;
-    int j;
+    int te_$st__j;
 
-    struct inner {
+    struct te_$st__inner {
         int k;
         int l;
     } inst, inst2;
     
     
-    union innerUnion{
-        int z;
+    union te_$st__innerUnion{
+        int te_$st__z;
     };
 
-    enum innerEnum{
+    enum te_$st__innerEnum{
         ggg = 566,
     } innerEnumInstance;
     
-} tStructdef[5];
+} te_$st__tStructdef[5];
 
-typedef struct tstruct tStructDef2;
+typedef struct tstruct te_$st__tStructDef2;
 
-struct tStruct e[];
+struct te_$st__tStruct te_$st__e[];
 
-typedef int * koo(long);
+typedef int * te_$st__koo(long);
 
-koo loo;
+te_$st__koo te_$st__loo;
 
-tStructdef f;
+te_$st__tStructdef te_$st__f;
 
-struct newStruct{int k;} retStructure(int), newStructInstance, newStructInstanceReturn(void);
+struct te_$st__newStruct{int k;} te_$st__retStructure(int), te_$st__newStructInstance, te_$st__newStructInstanceReturn(void);
 
-struct retStruct{ int retStructVal; } foooo(void) {
+struct te_$st__retStruct{ int retStructVal; } te_$st__foooo(void) {
     return {2};
-}
 
 unsigned int tempVar = 5;
 int barR()
@@ -140,7 +138,6 @@ unsigned int integerVal(void), kVal = 9, (*gVal(void))[3];
 
 
     int Arg;
-}
 
 }
 

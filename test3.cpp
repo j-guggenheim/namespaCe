@@ -85,7 +85,6 @@ typedef struct tStruct {
         int l;
     } inst, inst2;
     
-    
     union innerUnion{
         int z;
     };

@@ -13,29 +13,27 @@ def create_namespace_pattern(namespaces):
     pattern = r'\b({})::'.format(namespace_names)
     return pattern
 
+
 def replace_var_names(c_code, namespaces):
     lines = c_code.split('\n')
     modified_lines = [] 
 
-    namespace_stack = [] # Stack to keep track of nested namespace
-    # current_namespace = None
 
-    def replace_namespace_qualifier(match):
-        base_namespace = match.group(1)
-        full_namespace_path = ''
-        for ns in namespace_stack:
-            full_namespace_path += ns.name + '__'
-            if ns.name == base_namespace:
-                break
-        return full_namespace_path
-    
+    namespace_stack = [] # Stack to keep track of nested namespace
+    current_namespace = None
+    namespace_map = {}
+
     # Regular expression for namespace usage
     namespace_usage_pattern = create_namespace_pattern(namespaces)
-    
+
+
     for i, line in enumerate(lines):
         
         # Replace 'namespace::' with 'namespace__'
-        line = re.sub(namespace_usage_pattern, replace_namespace_qualifier, line)
+        match = re.search(namespace_usage_pattern, line)
+        if match:
+            match = namespace_map[match.group(1)]
+            line = re.sub(namespace_usage_pattern, match+'__', line) 
             
         namespace_match = re.match(r'\s*namespace\s+((\w|\$)+)\s*\{', line) # Assuming 'namespace XYZ {' format
         if namespace_match:
@@ -48,6 +46,7 @@ def replace_var_names(c_code, namespaces):
                 for outer_name in namespace_stack:
                     current_namespace.name = outer_name.name + '__' + current_namespace.name
             namespace_stack.append(current_namespace)
+            namespace_map[namespace_name] = current_namespace.name
             continue
 
         elif namespace_stack:

@@ -1,5 +1,6 @@
 import re
 import changeName
+import sys
 
 reAttribute = re.compile("\s*__attribute__\s*")
 qualifiers = [re.compile("\sstatic\s"), re.compile("\svolatile\s"), re.compile('\stypedef\s'), re.compile("\sconst\s"), re.compile("\s__extension__\s"), re.compile("\s__inline__\s"), re.compile("\sinline\s"), re.compile("\s__volatile__\s"), re.compile("\sextern\s")]
@@ -290,7 +291,8 @@ def getGlobalNames(text: str):
                 depthToTake = curlyBraceDepth
 
 if __name__ == "__main__":
-    cFile = open('test3.cpp', 'r')
+    fileName = str(sys.argv)[0]
+    cFile = open(fileName, 'r')
 
     fileText = cFile.read()
     reMoveAnnoyingLines = re.compile("\#.*\n")

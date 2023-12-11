@@ -14,8 +14,30 @@ def create_scope_pattern(namespaces):
     pattern = r'\b({})::'.format(namespace_names)
     return pattern
 
+def extract_string_literals(text):
+    string_literals = []
+    modified_text = text
+    pattern = r'(?<!\\)(["\'])(.*?)(?<!\\)\1'
+    matches = list(re.finditer(pattern, text))
+    for i, match in enumerate(reversed(matches)):
+        literal = match.group(0)
+        string_literals.append(literal)
+        placeholder = f"__STRING_LITERAL_{i}__"
+        start, end = match.span()
+        modified_text = modified_text[:start] + placeholder + modified_text[end:]
+    return modified_text, string_literals
+
+def reinsert_string_literals(text, string_literals):
+    for i, literal in enumerate(string_literals):
+        placeholder = f"__STRING_LITERAL_{i}__"
+        text = text.replace(placeholder, literal)
+    return text
+
+
 
 def replace_var_names(c_code, namespaces):
+
+    modified_c_code, string_literals = extract_string_literals(c_code)
 
     # Regular expression for namespace usage
     scope_usage_pattern = create_scope_pattern(namespaces)
@@ -24,7 +46,7 @@ def replace_var_names(c_code, namespaces):
     curlyBraceDepth = 0
 
     # Tracks the text left to examine
-    curText = c_code
+    curText = modified_c_code
 
     # Tracks which curly brace depth we entered into each namespace
     # as well as the names of the namespaces
@@ -38,6 +60,7 @@ def replace_var_names(c_code, namespaces):
     retText = ""
 
     while not inLastBlock:
+        
 
         # Find the end of the current braceless block (endIndex)
         # Find whether we are going shallower or deeper at the end (depthChange)
@@ -67,7 +90,9 @@ def replace_var_names(c_code, namespaces):
             for var in namespaces.get(curNamespaceTracker, set()):
                 if var not in used:
                     pattern = r'\b' + re.escape(var) + r'\b'
+
                     used.append(var)
+
                     if ('.' not in curNamespaceTracker):
                         replacement = curNamespaceTracker + '__' + var
                         newTextToSend = re.sub(pattern, replacement, newTextToSend)
@@ -78,13 +103,13 @@ def replace_var_names(c_code, namespaces):
                 curNamespaceTracker = curNamespaceTracker[:indToRemove]
                 
         if depthChange > 0:
-            namespace_match = re.search('\snamespace\s', newTextToSend)
+            namespace_match = re.search(r'\snamespace\s', newTextToSend)
 
             semInd = newTextToSend.rfind(";")
             lastStatement = newTextToSend
             if semInd != -1:
                 lastStatement = newTextToSend[semInd:]
-            structUnionEnum_match = re.search('\s(struct|union|enum)\s', lastStatement)
+            structUnionEnum_match = re.search(r'\s(struct|union|enum)\s', lastStatement)
 
             if namespace_match:
                 namespaceInd = newTextToSend.find("namespace")
@@ -93,7 +118,7 @@ def replace_var_names(c_code, namespaces):
                     namespaceByDepth.append(name)
                 else:
                     namespaceByDepth.append((namespaceByDepth[-1] + '__' + name).strip("_"))
-                newTextToSend = re.sub(('\s*namespace\s*' + name + '\s*{'),'', newTextToSend)
+                newTextToSend = re.sub((r'\s*namespace\s*' + name + r'\s*{'),'', newTextToSend)
                 toRemove.append(curlyBraceDepth)
 
             elif structUnionEnum_match:
@@ -115,7 +140,9 @@ def replace_var_names(c_code, namespaces):
                 toRemove.remove(curlyBraceDepth)
         
         retText = retText + newTextToSend
-    return retText
+    
+    retTextWithStrings = reinsert_string_literals(retText, string_literals)
+    return retTextWithStrings
         
 
 

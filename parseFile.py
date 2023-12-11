@@ -12,6 +12,8 @@ unsignedRemove = [re.compile('\sunsigned\s'), re.compile('\ssigned\s'), re.compi
 
 reNamespace = re.compile('\snamespace\s\S+\s*\{')
 
+reInQuotes = re.compile('(\".*;.*\")|(\'.*;.*\')')
+
 # All of the namespaces
 namespaces = {}
 
@@ -95,7 +97,7 @@ def getNamesFromBracelessBlock(text: str, wasStructUnionEnum = False, onlyWithBr
             # Check for a namespace (should only happen at end of braceless block)
             if re.search(reNamespace, nameAndLeft):
                 if hasSem or hasComma:
-                    print("JACK YOU'VE GOT A BIG BUG CTRL F THIS TEXT 1")
+                    print("BUG or bad test code")
                 endsOnNamespace = True
 
             # While "__attribute__" is in nameAndLeft (ugh)
@@ -164,15 +166,24 @@ def getNamesFromBracelessBlock(text: str, wasStructUnionEnum = False, onlyWithBr
 
             # If we only want names before open braces, then we should check if there's an open brace in the toNextSem block
             if onlyWithBraces and toNextSem.find('{') == -1:
+                if name != None and currentNameSpaceName != "":
+                    print(currentNameSpaceName + '__' + name)
+                    namespaces.get(currentNameSpaceName).append(name)
                 name = None
 
             # If name isn't None then we have a valid name
             if name != None:
                 if endsOnNamespace:
-                    nameSpaceNameParsed = name
+                    if '.' not in currentNameSpaceName:
+                        nameSpaceNameParsed = (currentNameSpaceName + '__' + name).strip('_')
                 elif currentNameSpaceName != "":
-                    print(currentNameSpaceName + name)
-                    namespaces.get(currentNameSpaceName).append(name)
+                    if endedOnStructUnionEnumDef:
+                        nameSpaceNameParsed = currentNameSpaceName + "." + name
+                    currentNameSpaceNameAdj = currentNameSpaceName
+                    if currentNameSpaceName.find('.') != -1:
+                        currentNameSpaceNameAdj = currentNameSpaceName[:currentNameSpaceName.find('.')]
+                    print(currentNameSpaceNameAdj + '__' + name)
+                    namespaces.get(currentNameSpaceNameAdj).append(name)
 
             # If there's a comma then we need to move toNextSem forward
             if hasComma:
@@ -249,14 +260,15 @@ def getGlobalNames(text: str):
         newTextToSend = curText[:endIndex + 1]
 
         # Calculate the current namespace name from namespaceByDepth
-        curNamespaceName = ""
-        for s in namespaceByDepth:
-            if s == "":
-                break
-            curNamespaceName = curNamespaceName + '__' + s
-            curNamespaceName = curNamespaceName.lstrip('_')
+        curNamespaceName = namespaceByDepth[curlyBraceDepth - 1]
+        # for s in namespaceByDepth:
+        #     if s == "":
+        #         break
+        #     curNamespaceName = curNamespaceName + '__' + s
+        #     curNamespaceName = curNamespaceName.lstrip('_')
         if namespaces.get(curNamespaceName) == None:
             namespaces[curNamespaceName] = []
+
 
         # Extract global names from newTextToSend (the braceless block)
         (endedOnStructUnionEnum[curlyBraceDepth], newNameSpaceName) = getNamesFromBracelessBlock(newTextToSend, endedOnStructUnionEnum.get(curlyBraceDepth), onlyWithBraces, curNamespaceName)
@@ -283,6 +295,8 @@ if __name__ == "__main__":
     fileText = cFile.read()
     reMoveAnnoyingLines = re.compile("\#.*\n")
     fileTextMod = reMoveAnnoyingLines.sub("", fileText)
+
+    fileTextMod = re.sub(reInQuotes, ' ', fileTextMod, count=0)
     
     outFile = open('testpost.c', 'w')
 

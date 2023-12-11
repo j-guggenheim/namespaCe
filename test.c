@@ -27,6 +27,7 @@ namespace outerNamespace {
         void function2() {
             int var7 = outerNamespace::var2; // Accessing var2 from outerNamespace
         }
+
     }
 }
 

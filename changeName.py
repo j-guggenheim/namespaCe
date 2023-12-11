@@ -37,7 +37,7 @@ def replace_var_names(c_code, namespaces):
             line = re.sub(namespace_usage_pattern, match+'__', line) 
             match = re.search(namespace_usage_pattern, line)
 
-            
+        
         namespace_match = re.match(r'\s*namespace\s+((\w|\$)+)\s*\{', line) # Assuming 'namespace XYZ {' format
         if namespace_match:
             # Extract namespace name from the regex match
@@ -56,19 +56,18 @@ def replace_var_names(c_code, namespaces):
         elif namespace_stack:
             used = []
 
-            
 
 
             # Replace variable names with "TEST" using regex for whole word matching
             for namespace in reversed(namespace_stack):
                 for var in namespace.vars:
-                    
                     if var not in used:
                         pattern = r'\b' + re.escape(var) + r'\b'  # Word boundary regex
                         used.append(var)    # should it be 'used.append(pattern)' ??
                         # Go through the stack to find nested names of namespaces
-                        replacement = namespace.name + '__' + var
-                        line = re.sub(pattern, replacement, line)  # Replace with regex
+                        if('.' not in namespace.name):
+                            replacement = namespace.name + '__' + var
+                            line = re.sub(pattern, replacement, line)  # Replace with regex
             lines[i] = line
             
             # Update brace counters

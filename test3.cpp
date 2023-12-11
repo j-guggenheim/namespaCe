@@ -8,7 +8,9 @@ int foo()
 
 
 
-namespace te_st{
+namespace te_st
+
+{
 
 extern
   __attribute__((__format__ (gnu_printf, 1, 2))) __attribute__ ((__nonnull__ (1)))
@@ -33,7 +35,7 @@ double dubs;
 uint8_t intTypes;
 
 enum tEnum{ g }tEnumInstance;
-union tUnionnn{int k; char l;} tUnionnnFunc(int)
+struct tUnionnn{int k; char l;} tUnionnnFunc(int)
 {
     return {3};
 }
@@ -76,7 +78,8 @@ int (foo)()
 
 int bar (){return b;} int bar2(void){return c;}
 
-typedef struct tStruct {
+typedef struct tStruct 
+{
     int i;
     int j;
 
@@ -85,7 +88,7 @@ typedef struct tStruct {
         int l;
     } inst, inst2;
     
-    union innerUnion{
+    union innerUnion {
         int z;
     };
 
@@ -131,6 +134,7 @@ union test3
     int d;
     char f;
     char lmfad[10];
+    tStructdef ttt;
 };
 
 unsigned int integerVal(void), kVal = 9, (*gVal(void))[3];

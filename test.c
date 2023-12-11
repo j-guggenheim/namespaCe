@@ -2,7 +2,7 @@
 
 int var4;
 
-namespace outerNamespace {
+namespace outerNamespace  {
     int var1 = 10;
     int var2 = 20;
 

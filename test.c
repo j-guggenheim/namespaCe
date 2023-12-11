@@ -42,5 +42,6 @@ namespace adjacentNamespace {
 int main() {
     outerNamespace::testFunction();
     adjacentNamespace::function3();
+    printf(innerNamespace::var1);
     return 0;
 }

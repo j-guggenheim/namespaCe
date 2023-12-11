@@ -13,56 +13,44 @@ def create_namespace_pattern(namespaces):
     pattern = r'\b({})::'.format(namespace_names)
     return pattern
 
+
 def replace_var_names(c_code, namespaces):
     lines = c_code.split('\n')
     modified_lines = [] 
 
-    # in_namespace = False
-    # current_namespace_vars = None
-    # open_braces_counter = 0
 
     namespace_stack = [] # Stack to keep track of nested namespace
     current_namespace = None
-    # current_namespace_vars = None
+    namespace_map = {}
 
     # Regular expression for namespace usage
     namespace_usage_pattern = create_namespace_pattern(namespaces)
 
 
     for i, line in enumerate(lines):
-        # if 'namespace' in line:
-            # # Extract namespace name
-            # namespace_name = line.split()[1]  # Assuming 'namespace XYZ {' format
-            # namespace_vars = set(namespaces.get(namespace_name, []))
-            # current_namespace = Namespace(namespace_name, namespace_vars)
-            # 
-            # namespace_stack.append(current_namespace)
-            # in_namespace = True
-
-            # # NOTE: the below line of code has to change when nested namespace
-            # # maybe seperate counters for each namespace?
-            # # open_braces_counter = 1 CHANGED
-
-            # continue
         
         # Replace 'namespace::' with 'namespace__'
-        line = re.sub(namespace_usage_pattern, r'\1__', line)
+        match = re.search(namespace_usage_pattern, line)
+        if match:
+            match = namespace_map[match.group(1)]
+            line = re.sub(namespace_usage_pattern, match+'__', line) 
             
-        namespace_match = re.match(r'\s*namespace\s+((\w|\$)+)\s*\{', line)
+        namespace_match = re.match(r'\s*namespace\s+((\w|\$)+)\s*\{', line) # Assuming 'namespace XYZ {' format
         if namespace_match:
             # Extract namespace name from the regex match
             namespace_name = namespace_match.group(1)
             namespace_vars = set(namespaces.get(namespace_name, []))
             current_namespace = Namespace(namespace_name, namespace_vars)
-
+            if namespace_stack:
+                # add all outer namespace names to this inner one before appending
+                for outer_name in namespace_stack:
+                    current_namespace.name = outer_name.name + '__' + current_namespace.name
             namespace_stack.append(current_namespace)
+            namespace_map[namespace_name] = current_namespace.name
             continue
-
-        # TO-DO: maybe a for-loop here iterating through namespace names to change namespace::var
 
         elif namespace_stack:
             used = []
-
             # Replace variable names with "TEST" using regex for whole word matching
             for namespace in reversed(namespace_stack):
                 for var in namespace.vars:
@@ -73,24 +61,12 @@ def replace_var_names(c_code, namespaces):
                         replacement = namespace.name + '__' + var
                         line = re.sub(pattern, replacement, line)  # Replace with regex
             lines[i] = line
-
-            #if '{' in line:  # End of namespace
-            #    open_braces_counter += 1
-            #
-
-            #if '}' in line:  # End of namespace
-            #    if open_braces_counter == 1:
-            #        in_namespace = False
-            #    else:
-            #        open_braces_counter -= 1
             
             # Update brace counters
             if '{' in line:
-                
-                current_namespace.brace_counter += line.count("{")
+                current_namespace.brace_counter += 1
             if '}' in line:
-                numClose = line.count("}")
-                if current_namespace.brace_counter == numClose:
+                if current_namespace.brace_counter == 1:
                     namespace_stack.pop()  # Leave the current namespace
                     # Update current_namespace and current_vars after popping
                     if namespace_stack:
@@ -99,30 +75,13 @@ def replace_var_names(c_code, namespaces):
                         current_namespace = None
                     continue
                 else:
-                    current_namespace.brace_counter -= numClose
+                    current_namespace.brace_counter -= 1
 
 
         modified_lines.append(line)
 
     return '\n'.join(modified_lines)
 
-
-# if __name__ == "__main__":
-#     file = open("test.c", "r")
-#     c_code = file.read()
-#     # print(text)
-#     # Example:
-# #     namespaces = {
-# #     'myNamespace': ['var1', 'function1', 'var2']
-# # }
-#     namespaces = {
-#     'outerNamespace': ['var1', 'var2', 'testFunction'],
-#     'innerNamespace': ['function1', 'var3', 'var2']
-# }
-#     # globalNames = []
-#     # replace_var_names('test.c', namespaces)
-#     modified_c_code = replace_var_names(c_code, namespaces)  # Changed to pass string
-#     print(modified_c_code) 
     
 if __name__ == "__main__":
     with open("test.c", "r") as file:
@@ -137,13 +96,3 @@ if __name__ == "__main__":
 
     modified_c_code = replace_var_names(c_code, namespaces)
     print(modified_c_code)
-
-# To change:
-# 1. curly brace  DONE
-# 2. nested namespaces
-    # a. properly identify the namespace associated with each var/function DONE
-    # b. change all instances of namespace_name::var_name DONE
-    # c. Edge case: if there's an extent variable referenced in a nested namespace, but also a variable of 
-    #   the same name for that namespace NOT DONE
-# 3. what to set the variable names to  DONE
-# 4. concerns with partial matching (ie var1 and var10) DONE

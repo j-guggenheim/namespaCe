@@ -291,18 +291,24 @@ def getGlobalNames(text: str):
                 depthToTake = curlyBraceDepth
 
 if __name__ == "__main__":
-    fileName = str(sys.argv)[0]
-    cFile = open(fileName, 'r')
 
-    fileText = cFile.read()
-    reMoveAnnoyingLines = re.compile("\#.*\n")
-    fileTextMod = reMoveAnnoyingLines.sub("", fileText)
+    firstIt = True;
+    for name in sys.argv:
+        if firstIt:
+            firstIt = False
+            continue
+        fileName = str(name)
+        cFile = open(fileName, 'r')
 
-    fileTextMod = re.sub(reInQuotes, ' ', fileTextMod, count=0)
-    
-    outFile = open('testpost.c', 'w')
+        fileText = cFile.read()
+        reMoveAnnoyingLines = re.compile("\#.*\n")
+        fileTextMod = reMoveAnnoyingLines.sub("", fileText)
 
-    getGlobalNames(fileTextMod)
-    print(namespaces)
-    outFile.write(changeName.replace_var_names(fileText, namespaces))
+        fileTextMod = re.sub(reInQuotes, ' ', fileTextMod, count=0)
+        
+        outFile = open(fileName.split('.')[0] + 'post.c', 'w')
+
+        getGlobalNames(fileTextMod)
+        print(namespaces)
+        outFile.write(changeName.replace_var_names(fileText, namespaces))
     

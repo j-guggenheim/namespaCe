@@ -16,11 +16,6 @@ def create_scope_pattern(namespaces):
 
 
 def replace_var_names(c_code, namespaces):
-    lines = c_code.split('\n')
-    modified_lines = [] 
-    
-    scope_stack = []
-    current_scope = None
 
     # Regular expression for namespace usage
     scope_usage_pattern = create_scope_pattern(namespaces)

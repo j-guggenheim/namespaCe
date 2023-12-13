@@ -306,7 +306,7 @@ if __name__ == "__main__":
 
         fileTextMod = re.sub(reInQuotes, ' ', fileTextMod, count=0)
         
-        outFile = open(fileName.split('.')[0] + 'post.c', 'w')
+        outFile = open(fileName.split('.')[0] + 'post.' + fileName.split('.')[1], 'w')
 
         getGlobalNames(fileTextMod)
         print(namespaces)

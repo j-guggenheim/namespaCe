@@ -82,7 +82,8 @@ def replace_var_names(c_code, namespaces):
         curText = curText[endIndex + 1:]
 
 
-        newTextToSend = newTextToSend.replace("::", "__")
+        newTextToSend = re.sub(r"\b::", "__", newTextToSend)
+        # newTextToSend = newTextToSend.replace("::", "__")
         
         curNamespaceTracker = namespaceByDepth[-1]
         used = []
